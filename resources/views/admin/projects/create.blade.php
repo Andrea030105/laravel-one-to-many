@@ -25,6 +25,7 @@
                 <div class="mb-3">
                     <label for="type" class="form-label">Type</label>
                     <select name="type_id" id="type_id">
+                        <option value="">Non Specificato</option>
                         @foreach($types as $type)
                         <option value="{{ $type->id }}">{{ $type->name }}</option>
                         @endforeach
