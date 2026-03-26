@@ -23,6 +23,14 @@
                     <input type="text" class="form-control" name="title" id="title" placeholder="Add Title">
                 </div>
                 <div class="mb-3">
+                    <label for="type" class="form-label">Type</label>
+                    <select name="type_id" id="type_id">
+                        @foreach($types as $type)
+                        <option value="{{ $type->id }}">{{ $type->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="mb-3">
                     <label class="form-label" for="description">Description</label>
                     <textarea class="form-control" name="description" id="description" rows="3" placeholder="Add Description"></textarea>
                 </div>

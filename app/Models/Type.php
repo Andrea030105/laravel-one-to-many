@@ -6,5 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Type extends Model
 {
-    //
+    protected $fillable = ['name', 'slug'];
+
+    public function projects()
+    {
+
+        return $this->hasMany(Project::class);
+    }
 }
