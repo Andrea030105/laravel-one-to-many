@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Project;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
+use App\Models\Technology;
 use App\Models\Type;
 use Illuminate\Support\Str;
 
@@ -27,7 +28,8 @@ class ProjectController extends Controller
     public function create()
     {
         $types = Type::all();
-        return view('admin.projects.create', compact('types'));
+        $technologies = Technology::all();
+        return view('admin.projects.create', compact('types', 'technologies'));
     }
 
     /**
@@ -36,9 +38,15 @@ class ProjectController extends Controller
     public function store(StoreProjectRequest $request)
     {
         $from_data = $request->all();
+
         $slug = Str::slug($request->title, '-');
         $from_data['slug'] = $slug;
         $newProject = Project::create($from_data);
+
+        if ($request->has('technologies')) {
+            $newProject->technologies()->attach($request->technologies);
+        }
+
         return redirect()->route('admin.projects.index')->with('message', 'Project created correctly!!');
     }
 
@@ -47,6 +55,8 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
+        $project->load(['type', 'technologies']);
+
         return view('admin.projects.show', compact('project'));
     }
 
@@ -56,7 +66,8 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         $types = Type::all();
-        return view('admin.projects.edit', compact('project', 'types'));
+        $technologies = Technology::all();
+        return view('admin.projects.edit', compact('project', 'types', 'technologies'));
     }
 
     /**
@@ -68,6 +79,11 @@ class ProjectController extends Controller
         $slug = Str::slug($request->title, '-');
         $from_data['slug'] = $slug;
         $project->update($from_data);
+
+        if ($request->has('technologies')) {
+            $project->technologies()->sync($request->technologies);
+        }
+
         return redirect()->route('admin.projects.index', compact('project'))->with('message', 'Project modified correctly!!');
     }
 
