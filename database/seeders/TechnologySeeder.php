@@ -2,13 +2,13 @@
 
 namespace Database\Seeders;
 
+use App\Models\Technology;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Faker\Generator as Faker;
-use App\Models\Technologie;
 use Illuminate\Support\Str;
 
-class TechnologieSeeder extends Seeder
+class TechnologySeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -17,7 +17,7 @@ class TechnologieSeeder extends Seeder
     {
 
         for ($i = 0; $i < 7; $i++) {
-            $newTechnologie = new Technologie();
+            $newTechnologie = new Technology();
 
             $newTechnologie->name = $faker->word();
             $newTechnologie->slug = Str::slug($newTechnologie->name, '-');

@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Technologie extends Model
+class Technology extends Model
 {
     protected $fillable = ['nome', 'slug'];
 
